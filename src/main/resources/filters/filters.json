@@ -1,0 +1,24 @@
+[
+  {
+    "filterName": "filter1",
+    "attribute": "user",
+    "operator": "eq",
+    "value": "user1@sample.io"
+  },
+  {
+    "filterName": "filter2",
+    "attribute": "type",
+    "operator": "eq",
+    "value": "LOGOUT"
+  },
+  {
+    "filterName": "filter3",
+    "attribute": "time",
+    "operator": "eq",
+    "range": {
+      "from": 1262427060000,
+      "to": 1262542260000
+    }
+  }
+]
+
