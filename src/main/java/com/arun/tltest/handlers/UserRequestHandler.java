@@ -18,12 +18,12 @@ public class UserRequestHandler extends RequestHandler<User> {
     }
 
     @Override
-    protected ReactiveMongoRepository getRepository() {
+    protected ReactiveMongoRepository<User, String> getRepository() {
         return this.userRepository;
     }
 
     @Override
-    protected CustomRepository getCustomRepository() {
+    protected CustomRepository<User> getCustomRepository() {
         return this.userRepository;
     }
 

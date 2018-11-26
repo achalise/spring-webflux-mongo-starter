@@ -19,12 +19,12 @@ public class EventRequestHandler extends RequestHandler<Event> {
 
 
     @Override
-    protected ReactiveMongoRepository getRepository() {
+    protected ReactiveMongoRepository<Event, String> getRepository() {
         return this.eventRepository;
     }
 
     @Override
-    protected CustomRepository getCustomRepository() {
+    protected CustomRepository<Event> getCustomRepository() {
         return this.eventRepository;
     }
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,23 +34,34 @@ public class QueryFiltersService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        filters = populateFilters(filterDefinitions);
+    }
+
+    protected List<Filter> populateFilters(Resource filterDefinitions) throws IOException {
         try (InputStream inputStream = filterDefinitions.getInputStream()) {
 
             ObjectMapper mapper = new ObjectMapper();
 
             TypeReference<List<Filter>> filterList = new TypeReference<List<Filter>>() {
             };
-            filters = Collections.unmodifiableList(mapper.readValue(inputStream, filterList));
-            List<String> errors = new ArrayList<>();
-            filters.forEach(filter -> {
-                if (!filter.validate()) {
-                    errors.add("Invalid filter " + filter.getFilterName());
-                }
-            });
+            List<Filter> filters = Collections.unmodifiableList(mapper.readValue(inputStream, filterList));
+            List<String> errors = validateFilters(filters);
             if (!errors.isEmpty()) {
                 errors.forEach(logger::error);
                 throw new IllegalArgumentException("Invalid filter configuration");
+            } else {
+                return filters;
             }
         }
+    }
+
+    private List<String> validateFilters(List<Filter> filters) {
+        List<String> errors = new ArrayList<>();
+        filters.forEach(filter -> {
+            if (!filter.isValid()) {
+                errors.add("Invalid filter " + filter.getFilterName());
+            }
+        });
+        return errors;
     }
 }

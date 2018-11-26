@@ -14,7 +14,7 @@
   {
     "filterName": "filter3",
     "attribute": "time",
-    "operator": "eq",
+    "operator": "gte",
     "range": {
       "from": 1262340660000,
       "to": 1262340660000

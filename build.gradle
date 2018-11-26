@@ -3,7 +3,7 @@ buildscript {
 		springBootVersion = '2.1.0.RELEASE'
 	}
 	repositories {
-		mavenCentral()
+        mavenCentral()
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -27,6 +27,21 @@ group = 'com.arun'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+
+task buildImage(dependsOn: build,  type: Copy) {
+    from "${projectDir}/docker/Dockerfile"
+    into "${projectDir}/build/libs"
+    runDockerBuild("achalise/tl-test:1.0")
+}
+
+def runDockerBuild(String target) {
+    exec {
+        workingDir "build/libs"
+        executable "sh"
+        args "-c", "docker build -t achalise/tl-test:1.0 ."
+    }
+}
+
 repositories {
 	mavenCentral()
 }
@@ -38,4 +53,5 @@ dependencies {
 	compileOnly('org.projectlombok:lombok:1.18.4')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('io.projectreactor:reactor-test')
+    testImplementation('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 }

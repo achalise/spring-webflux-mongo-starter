@@ -17,12 +17,25 @@ public class Filter {
     private String value;
     private Range range;
 
+    /**
+     * Assumes that the Filter has been correctly created, validated during their creation at the start up of
+     * the application
+     * @return Criteria
+     */
     public Criteria toCriteria() {
         Criteria criteria;
         FilterOperator filterOperator = FilterOperator.valueOf(operator.toUpperCase());
+
         switch (filterOperator) {
             case EQ:
-                criteria = (Criteria.where(attribute).regex(value));
+                if (range != null) {
+                    criteria = new Criteria().andOperator(
+                            Criteria.where(attribute).gte(valueOfRange(range.getFrom())),
+                            Criteria.where(attribute).lte(valueOfRange(range.getTo()))
+                    );
+                } else {
+                    criteria = (Criteria.where(attribute).regex(value));
+                }
                 break;
             case GTE:
                 criteria = (Criteria.where(attribute).gte(value));
@@ -37,7 +50,23 @@ public class Filter {
         return criteria;
     }
 
-    public boolean validate() {
+    /**
+     *
+     * Only supporting either string or number for the query
+     *
+     * @param value
+     * @return numeric equivalent or the original string
+     */
+    private Object valueOfRange(String value) {
+        try {
+            Double d = Double.parseDouble(value);
+            return d;
+        } catch (NumberFormatException nfe) {
+            return value;
+        }
+    }
+
+    public boolean isValid() {
         return validateEitherRangeOrValue() && validateOperator();
     }
 
@@ -58,17 +87,8 @@ public class Filter {
     private boolean validateEitherRangeOrValue() {
         boolean rangeExists = range != null;
         boolean valueExists = value != null;
-        return rangeExists ^ valueExists;
+        return (rangeExists && range.validateRange()) ^ valueExists;
     }
-}
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-class Range {
-    private String from;
-    private String to;
 }
 
 //- Unknown operators are not allowed.
