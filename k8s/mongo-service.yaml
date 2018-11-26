@@ -18,12 +18,12 @@ spec:
         - name: mongo
           containerPort: 27017
         volumeMounts:
-            - name: mongo-persistent-storage
-              mountPath: /data/db
-      volumes:
         - name: mongo-persistent-storage
-          hostPath:
-                path: /data/db/tl-service
+          mountPath: /data/db
+      volumes:
+      - name: mongo-persistent-storage
+        hostPath:
+          path: /data/db/tl-service
 ---
 apiVersion: v1
 kind: Service
@@ -33,7 +33,7 @@ metadata:
   name: mongo-tl-service
 spec:
   ports:
-    - port: 27017
-      targetPort: 27017
+  - port: 27017
+    targetPort: 27017
   selector:
     name: mongo-tl

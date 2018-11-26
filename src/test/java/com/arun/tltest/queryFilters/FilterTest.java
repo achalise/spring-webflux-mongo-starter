@@ -32,21 +32,16 @@ public class FilterTest {
     }
 
     @Test
-    public void testCriteriaIsGeneratedCorrectlyForRangeFilter() {
-
-    }
-
-    @Test
     public void testRangeFilterIsCorrectlyValidated() {
         Filter filter = Filter.builder().filterName("f1")
                 .attribute("time")
                 .operator("gte")
                 .range(Range.builder().from("123").to("890").build())
                 .build();
-        Assertions.assertThat(filter.isValid()).isFalse().as("Invalid operator " + filter.getOperator()+ ", Only 'eq' operator is allowed for Range");
+        Assertions.assertThat(filter.isValid()).isFalse().as("Invalid operator " + filter.getOperator() + ", Only 'eq' operator is allowed for Range");
 
         filter.setOperator("lte");
-        Assertions.assertThat(filter.isValid()).isFalse().as("Invalid operator " + filter.getOperator()+ ", Only 'eq' operator is allowed for Range");
+        Assertions.assertThat(filter.isValid()).isFalse().as("Invalid operator " + filter.getOperator() + ", Only 'eq' operator is allowed for Range");
 
         filter.setOperator("eq");
         Assertions.assertThat(filter.isValid()).isTrue().as("Only 'eq' operator is allowed for Range");

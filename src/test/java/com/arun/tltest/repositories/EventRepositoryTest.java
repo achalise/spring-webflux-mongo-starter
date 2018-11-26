@@ -57,7 +57,7 @@ public class EventRepositoryTest {
 
     @Test
     public void testSearchByRangeFilterWithResults() {
-        Flux<Event> returnedEvents = Flux.just(1l,2l,3l,4l,5l)
+        Flux<Event> returnedEvents = Flux.just(1l, 2l, 3l, 4l, 5l)
                 .map(i -> (Event.builder().time(i).build()))
                 .flatMap(event -> eventRepository.save(event))
                 .thenMany(eventRepository.search(Filter.builder().attribute("time").operator("eq").range(
@@ -68,7 +68,7 @@ public class EventRepositoryTest {
 
     @Test
     public void testSearchByRangeFilterWithNoResults() {
-        Flux<Event> returnedEvents = Flux.just(1l,2l,3l,4l,5l)
+        Flux<Event> returnedEvents = Flux.just(1l, 2l, 3l, 4l, 5l)
                 .map(i -> (Event.builder().time(i).build()))
                 .flatMap(event -> eventRepository.save(event))
                 .thenMany(eventRepository.search(Filter.builder().attribute("time").operator("eq").range(

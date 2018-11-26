@@ -23,7 +23,6 @@ import java.util.Optional;
 /**
  * Did not have time to write tests for EventRequestHandler as I wanted to submit it quickly.
  * But since both UserRequestHandler and EventRequestHandler extend RequestHandler which does the actual work
- *
  */
 
 @RunWith(SpringRunner.class)

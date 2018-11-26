@@ -23,19 +23,19 @@ import java.util.stream.Collectors;
 public abstract class RequestHandler<T> {
     private static final String PARAM_NAME_FILTER = "filter";
     private static final String PATH_VARIABLE_NAME_ID = "id";
-
-    protected abstract ReactiveMongoRepository<T, String> getRepository();
-    protected abstract CustomRepository<T> getCustomRepository();
-    protected abstract Class<T> getEntityClass();
-
     private QueryFiltersService queryFilterService;
 
     protected RequestHandler(QueryFiltersService queryFiltersService) {
         this.queryFilterService = queryFiltersService;
     }
 
+    protected abstract ReactiveMongoRepository<T, String> getRepository();
+
+    protected abstract CustomRepository<T> getCustomRepository();
+
+    protected abstract Class<T> getEntityClass();
+
     /**
-     *
      * @param request The request to process
      * @return Response containing the entity found or a not found response if the entity does not exist
      */
@@ -48,7 +48,6 @@ public abstract class RequestHandler<T> {
     }
 
     /**
-     *
      * Returns  a Bar Request response if no filters are provided
      *
      * @param request requet to process

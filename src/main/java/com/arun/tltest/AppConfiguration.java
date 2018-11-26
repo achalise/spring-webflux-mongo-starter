@@ -27,5 +27,4 @@ public class AppConfiguration {
                 .andRoute(GET("/event/search"), eventRequestHandler::search)
                 .andRoute(GET("/event/{id}"), eventRequestHandler::byId);
     }
-
 }

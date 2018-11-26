@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @SpringBootApplication
 public class TlTestApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TlTestApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TlTestApplication.class, args);
+    }
 
 }
 
@@ -20,7 +20,8 @@ public class TlTestApplication {
 class DataInitializer implements CommandLineRunner {
     private UserRepository userRepository;
     private EventRepository eventRepository;
-    DataInitializer(UserRepository userRepository, EventRepository eventRepository){
+
+    DataInitializer(UserRepository userRepository, EventRepository eventRepository) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
     }

@@ -19,21 +19,22 @@ public abstract class CustomRepositoryImpl<T> implements CustomRepository {
 
     private ReactiveMongoTemplate mongoTemplate;
 
-    public abstract Class<T> getEntityClass();
-
     public CustomRepositoryImpl(ReactiveMongoTemplate template) {
         this.mongoTemplate = template;
     }
 
+    public abstract Class<T> getEntityClass();
+
     /**
      * If no filters are provided, it returns an empty search result
+     *
      * @param filters
      * @return search result
      */
     @Override
     public Flux<T> search(Filter... filters) {
         if (filters == null || filters.length < 1) {
-           return Flux.empty();
+            return Flux.empty();
         }
         Query query = new Query();
         Criteria criteria = new Criteria();

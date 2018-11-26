@@ -22,7 +22,7 @@ public class QueryFiltersServiceTest {
     @Test
     public void testQueryFilterServiceIsCorrectlyInitialised() {
         assertThat(queryFiltersService).isNotNull();
-        Filter filter1 =  queryFiltersService.retrieveFilterByName("filter1").get();
+        Filter filter1 = queryFiltersService.retrieveFilterByName("filter1").get();
         assertThat(filter1.getFilterName()).isEqualTo("filter1");
 
         Optional<Filter> nonExistent = queryFiltersService.retrieveFilterByName("none");

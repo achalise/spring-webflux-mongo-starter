@@ -20,6 +20,7 @@ public class Filter {
     /**
      * Assumes that the Filter has been correctly created, validated during their creation at the start up of
      * the application
+     *
      * @return Criteria
      */
     public Criteria toCriteria() {
@@ -51,7 +52,6 @@ public class Filter {
     }
 
     /**
-     *
      * Only supporting either string or number for the query
      *
      * @param value

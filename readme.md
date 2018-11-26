@@ -31,6 +31,8 @@ Change the default port in `application.properties`
 
 Currently it is set to `6868` for th app and `27777` to connect to  monogdb.
 
+Please ensure you have correct permissions to execute gradle before running following commands.
+
 * To run the tests:
 
 `./gradlew check`
@@ -51,16 +53,13 @@ The built image can be displayed by executing `docker images`.
 This is just a very basic execution of `docker` build command from `gradle` for demo only, and needs to be done 
 properly to remove hardcoded names to make it suitable for CI and automation.
 
+`cd build/libs`  
+`docker build -t achalise/tl-test:1.0 .`  
+
 
 * To start the app in Docker container:
 
 `docker run --name tl-test-app -p 6868:6868 achalise/tl-test:1.0`
-
-Since the app needs to communicate to mongo running in different container, we need a bridge network
-between the two containers and need to be instantiated using `Docker Compose`. I did not have time to
-set up Docker Compose, but since I had played with `kubernetes` in my other project, I was quickly able to 
-create `kubernetes` deployment descriptors to run the app and the mongo database in separate pods in kubernetes cluster,
-which I thought of including with the project. 
 
 * Running the app in Kubernetes
 
