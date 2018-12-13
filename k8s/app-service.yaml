@@ -12,7 +12,7 @@ spec:
         track: stable
     spec:
       containers:
-      - name: card-service
+      - name: tl-service
         image: "achalise/tl-test:1.0"
         ports:
         - containerPort: 8080
